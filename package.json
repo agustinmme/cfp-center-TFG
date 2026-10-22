@@ -9,9 +9,13 @@
     "preview": "vite preview"
   },
   "dependencies": {
-    "@tanstack/react-query": "^5.90.3",
-    "react": "^19.1.1",
-    "react-dom": "^19.1.1"
+    "@supabase/supabase-js": "2.118.0",
+    "@tanstack/react-query": "5.90.3",
+    "bootstrap": "5.3.8",
+    "lucide-react": "1.52.0",
+    "react": "19.1.1",
+    "react-dom": "19.1.1",
+    "react-hook-form": "7.89.0"
   },
   "devDependencies": {
     "@vitejs/plugin-react": "^5.0.4",
