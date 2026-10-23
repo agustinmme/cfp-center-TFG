@@ -1,9 +1,11 @@
+import colors from '../theme/colors.js'
+
 function SidebarBrand() {
   return (
     <div className="d-flex align-items-center gap-2 mb-4 px-1">
       <div
         className="d-grid align-items-center justify-content-center rounded-2 fw-bold"
-        style={{ width: '40px', height: '40px', border: '1px solid #cfe0e8', color: '#e8b765', fontSize: '16px' }}
+        style={{ width: '40px', height: '40px', border: `1px solid ${colors.sidebar.text}`, color: colors.sidebar.brand, fontSize: '16px' }}
       >
         CFP
       </div>

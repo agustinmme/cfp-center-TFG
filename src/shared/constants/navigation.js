@@ -33,3 +33,12 @@ export const navigationGroups = [
     ],
   },
 ]
+
+export function getNavigationForRole(role) {
+  if (role === 'Administrador') return navigationGroups
+  if (role === 'Administrativo') {
+    return navigationGroups.filter((group) => group.label === 'GESTION ACADEMICA')
+  }
+
+  return []
+}

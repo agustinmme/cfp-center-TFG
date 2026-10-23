@@ -1,11 +1,14 @@
-import { navigationGroups } from '../constants/navigation.js'
+import { getNavigationForRole } from '../constants/navigation.js'
+import colors from '../theme/colors.js'
 
-function SidebarNavigation({ currentPage }) {
+function SidebarNavigation({ currentPage, role, onPageChange }) {
+  const navigationGroups = getNavigationForRole(role)
+
   return (
     <>
       {navigationGroups.map((group) => (
         <div className="mb-4" key={group.label}>
-          <div className="px-2 mb-2 fw-semibold" style={{ color: '#86a3b0', fontSize: '8.5px', letterSpacing: '1.4px' }}>
+          <div className="px-2 mb-2 fw-semibold" style={{ color: colors.sidebar.mutedText, fontSize: '8.5px', letterSpacing: '1.4px' }}>
             {group.label}
           </div>
           <nav className="d-grid gap-1" aria-label={group.label}>
@@ -18,10 +21,11 @@ function SidebarNavigation({ currentPage }) {
                   key={label}
                   type="button"
                   aria-current={active ? 'page' : undefined}
+                  onClick={() => onPageChange(label)}
                   style={{
-                    color: active ? '#fff' : '#cfe0e8',
-                    backgroundColor: active ? '#2a5368' : 'transparent',
-                    boxShadow: active ? 'inset 2px 0 0 #d9a24c' : 'none',
+                    color: active ? colors.white : colors.sidebar.text,
+                    backgroundColor: active ? colors.sidebar.activeBackground : 'transparent',
+                    boxShadow: active ? `inset 2px 0 0 ${colors.sidebar.activeIndicator}` : 'none',
                     fontSize: '11px',
                   }}
                 >

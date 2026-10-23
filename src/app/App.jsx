@@ -1,9 +1,11 @@
+import { useState } from 'react'
 import LoginPage from '../features/auth/pages/LoginPage.jsx'
-import HomePage from '../features/home/pages/HomePage.jsx'
+import { navigationViews } from './routes/navigationViews.js'
 import { isSupabaseConfigured } from '../backend/supabase/client.js'
 import { useAuth } from '../features/auth/providers/AuthProvider.jsx'
 import { useUsuario } from '../features/auth/hooks/useUsuario.js'
 import AppLayout from '../shared/layouts/AppLayout.jsx'
+import { getNavigationForRole } from '../shared/constants/navigation.js'
 
 function App() {
   const { loading, user, signOut } = useAuth()
@@ -47,9 +49,24 @@ function App() {
     )
   }
 
+  return <AuthenticatedApp user={user} profile={usuario} signOut={signOut} />
+}
+
+function AuthenticatedApp({ user, profile, signOut }) {
+  const [selectedPage, setSelectedPage] = useState('Panel general')
+  const availableNavigation = getNavigationForRole(profile.rol)
+  const availablePages = availableNavigation.flatMap((group) => group.items.map((item) => item.label))
+  const firstPage = availablePages[0]
+  const currentPage = availablePages.includes(selectedPage) ? selectedPage : firstPage
+  const SelectedPage = navigationViews[currentPage]
+
+  function handlePageChange(page) {
+    if (availablePages.includes(page)) setSelectedPage(page)
+  }
+
   return (
-    <AppLayout currentPage="Panel general" user={user} profile={usuario} onSignOut={signOut}>
-      <HomePage />
+    <AppLayout currentPage={currentPage} user={user} profile={profile} onSignOut={signOut} onPageChange={handlePageChange}>
+      {SelectedPage ? <SelectedPage /> : null}
     </AppLayout>
   )
 }
