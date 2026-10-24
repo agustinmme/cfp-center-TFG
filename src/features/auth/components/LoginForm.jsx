@@ -2,6 +2,7 @@ import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
 import Button from '../../../shared/components/Button.jsx'
+import theme from '../../../shared/theme/index.js'
 import { useAuth } from '../providers/AuthProvider.jsx'
 
 function LoginForm() {
@@ -32,57 +33,140 @@ function LoginForm() {
   }
 
   return (
-    <form onSubmit={handleSubmit(handleLogin)} noValidate>
+    <form
+      onSubmit={handleSubmit(handleLogin)}
+      noValidate
+      style={{ display: 'flex', flexDirection: 'column', gap: '18px' }}
+    >
       {errors.root?.authentication && (
-        <div className="alert alert-danger py-2" role="alert">
+        <div
+          role="alert"
+          style={{
+            margin: 0,
+            padding: '8px 12px',
+            border: `1px solid ${theme.login.error}`,
+            borderRadius: '6px',
+            color: theme.login.error,
+            fontSize: '12px',
+          }}
+        >
           {errors.root.authentication.message}
         </div>
       )}
 
-      <div className="mb-3">
-        <label className="form-label fw-bold" htmlFor="email">Correo electronico</label>
-        <div className="input-group">
-          <span className="input-group-text bg-white">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
+        <label htmlFor="email" style={{ margin: 0, color: theme.login.text, fontSize: '12px', fontWeight: 600 }}>Correo electronico</label>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'stretch',
+            height: '44px',
+            overflow: 'hidden',
+            border: `1px solid ${errors.email ? theme.login.error : theme.login.border}`,
+            borderRadius: '6px',
+            background: theme.login.inputBackground,
+          }}
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'flex',
+              flex: 'none',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '44px',
+              borderRight: `1px solid ${theme.login.border}`,
+              color: theme.login.mutedText,
+            }}
+          >
             <Mail size={16} strokeWidth={1.7} aria-hidden="true" />
           </span>
           <input
             id="email"
             type="email"
-            className={`form-control${errors.email ? ' is-invalid' : ''}`}
             placeholder="Ingresa tu correo electronico"
             autoComplete="email"
             aria-describedby={errors.email ? 'email-feedback' : undefined}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              border: 0,
+              background: 'transparent',
+              color: theme.login.text,
+              padding: '0 12px',
+              fontSize: '13px',
+            }}
             {...register('email', {
               required: 'Ingresa tu correo electronico.',
               pattern: { value: /^(\S+)@(\S+)\.(\S+)$/, message: 'Ingresa un correo electronico valido.' },
             })}
           />
         </div>
-        {errors.email && <div className="invalid-feedback d-block" id="email-feedback">{errors.email.message}</div>}
+        {errors.email && <div id="email-feedback" style={{ margin: 0, color: theme.login.error, fontSize: '12px' }}>{errors.email.message}</div>}
       </div>
 
-      <div className="mb-3">
-        <label className="form-label fw-bold" htmlFor="password">Contrasena</label>
-        <div className="input-group">
-          <span className="input-group-text bg-white">
+      <div style={{ display: 'flex', flexDirection: 'column', gap: '6px', margin: 0 }}>
+        <label htmlFor="password" style={{ margin: 0, color: theme.login.text, fontSize: '12px', fontWeight: 600 }}>Contrasena</label>
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'stretch',
+            height: '44px',
+            overflow: 'hidden',
+            border: `1px solid ${errors.password ? theme.login.error : theme.login.border}`,
+            borderRadius: '6px',
+            background: theme.login.inputBackground,
+          }}
+        >
+          <span
+            aria-hidden="true"
+            style={{
+              display: 'flex',
+              flex: 'none',
+              alignItems: 'center',
+              justifyContent: 'center',
+              width: '44px',
+              borderRight: `1px solid ${theme.login.border}`,
+              color: theme.login.mutedText,
+            }}
+          >
             <LockKeyhole size={16} strokeWidth={1.7} aria-hidden="true" />
           </span>
           <input
             id="password"
             type={showPassword ? 'text' : 'password'}
-            className={`form-control${errors.password ? ' is-invalid' : ''}`}
             placeholder="Ingresa tu contrasena"
             autoComplete="current-password"
             aria-describedby={errors.password ? 'password-feedback' : undefined}
+            style={{
+              flex: 1,
+              minWidth: 0,
+              border: 0,
+              background: 'transparent',
+              color: theme.login.text,
+              padding: '0 12px',
+              fontSize: '13px',
+            }}
             {...register('password', { required: 'Ingresa tu contrasena.' })}
           />
 
           <button
             type="button"
-            className="btn btn-outline-secondary"
             aria-label={showPassword ? 'Ocultar contrasena' : 'Mostrar contrasena'}
             aria-pressed={showPassword}
             onClick={() => setShowPassword((currentValue) => !currentValue)}
+            style={{
+              display: 'flex',
+              alignItems: 'center',
+              justifyContent: 'center',
+              flex: 'none',
+              width: '44px',
+              border: 0,
+              borderLeft: `1px solid ${theme.login.border}`,
+              background: 'transparent',
+              color: theme.login.mutedText,
+              cursor: 'pointer',
+            }}
           >
             {showPassword ? (
               <EyeOff size={16} strokeWidth={1.7} aria-hidden="true" />
@@ -91,13 +175,13 @@ function LoginForm() {
             )}
           </button>
         </div>
-        {errors.password && <div className="invalid-feedback d-block" id="password-feedback">{errors.password.message}</div>}
+        {errors.password && <div id="password-feedback" style={{ margin: 0, color: theme.login.error, fontSize: '12px' }}>{errors.password.message}</div>}
       </div>
 
       <Button
         type="submit"
-        className="btn-primary w-100 d-flex align-items-center justify-content-center gap-2"
-        endIcon={<ArrowRight size={16} strokeWidth={1.7} aria-hidden="true" />}
+        style={{ width: '100%' }}
+        icon={<ArrowRight size={16} strokeWidth={1.7} aria-hidden="true" />}
       >
         Ingresar
       </Button>

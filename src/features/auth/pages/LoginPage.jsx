@@ -1,23 +1,84 @@
 import LoginForm from '../components/LoginForm.jsx'
+import Logo from '../../../shared/components/Logo.jsx'
+import theme from '../../../shared/theme/index.js'
 
 function LoginPage() {
   return (
-    <main className="min-vh-100 d-flex align-items-center justify-content-center bg-light p-4">
-      <section className="card col-4 border-0 rounded-3 shadow-sm" aria-labelledby="login-title">
-        <div className="card-body p-4">
-          <div className="mb-2 text-uppercase text-primary fw-bold small">Bienvenido/a</div>
+    <main
+      style={{
+        minHeight: '100vh',
+        padding: '24px',
+        display: 'flex',
+        alignItems: 'center',
+        justifyContent: 'center',
+        background: theme.login.background,
+        color: theme.login.text,
+      }}
+    >
+      <section
+        aria-labelledby="login-title"
+        style={{
+          width: '33.333333%',
+          overflow: 'hidden',
+          border: `1px solid ${theme.login.border}`,
+          borderRadius: '12px',
+          background: theme.login.surface,
+          boxShadow: theme.login.shadow,
+        }}
+      >
+        <div
+          style={{
+            display: 'flex',
+            alignItems: 'center',
+            justifyContent: 'center',
+            padding: '24px 32px',
+            background: theme.login.headerBackground,
+          }}
+        >
+          <Logo />
+        </div>
 
-          <h1 className="h2 mb-2" id="login-title">
-            Iniciar sesion
-          </h1>
+        <div
+          style={{
+            display: 'flex',
+            flexDirection: 'column',
+            gap: '24px',
+            padding: '32px',
+          }}
+        >
+          <div>
+            <div
+              style={{
+                color: theme.login.eyebrow,
+                fontSize: '11px',
+                fontWeight: 700,
+                letterSpacing: '0.14em',
+              }}
+            >
+              BIENVENIDO/A
+            </div>
 
-          <p className="mb-4 text-secondary small">
-            Ingresa tus credenciales para continuar al panel de gestion.
-          </p>
+            <h1
+              id="login-title"
+              style={{
+                margin: '6px 0 8px',
+                fontSize: '28px',
+                lineHeight: 1.2,
+              }}
+            >
+              Iniciar sesion
+            </h1>
+
+            <p style={{ margin: 0, color: theme.login.mutedText, fontSize: '13px' }}>
+              Ingresa tus credenciales para continuar al panel de gestion.
+            </p>
+          </div>
 
           <LoginForm />
 
-          <div className="mt-4 text-center text-secondary small">CFP 402&nbsp;&nbsp;·&nbsp;&nbsp;Sistema de Gestion Academica</div>
+          <p style={{ margin: 0, color: theme.login.mutedText, fontSize: '12px', textAlign: 'center' }}>
+            Sistema de Gestion Academica
+          </p>
         </div>
       </section>
     </main>
