@@ -1,8 +1,33 @@
+import { useEffect, useState } from 'react'
 import Button from '../../../shared/components/Button.jsx'
 import Legend from '../../../shared/components/Legend.jsx'
+import { useCentro, useUpdateCentroNombre } from '../../../shared/hooks/useCentro.js'
 import theme from '../../../shared/theme/index.js'
 
 function ConfigurationPage() {
+  const { data: centro, isLoading, isError } = useCentro()
+  const updateCentroNombre = useUpdateCentroNombre()
+  const [nombre, setNombre] = useState('')
+
+  useEffect(() => {
+    if (centro?.nombre) setNombre(centro.nombre)
+  }, [centro?.nombre])
+
+  function handleSubmit(event) {
+    event.preventDefault()
+    const nombreNormalizado = nombre.trim()
+    if (!nombreNormalizado) return
+    updateCentroNombre.mutate(nombreNormalizado)
+  }
+
+  const feedback = updateCentroNombre.isSuccess
+    ? 'Cambios guardados.'
+    : updateCentroNombre.isError
+      ? 'No se pudo guardar el nombre del centro.'
+      : isError
+        ? 'No se pudo cargar la informacion del centro.'
+        : ''
+
   return (
     <div
       className="container-fluid d-flex flex-column gap-4"
@@ -26,7 +51,7 @@ function ConfigurationPage() {
           width: '50%'
         }}
       >
-        <form className="d-flex flex-column gap-3" onSubmit={(event) => event.preventDefault()}>
+        <form className="d-flex flex-column gap-3" onSubmit={handleSubmit}>
           <fieldset className="d-flex flex-column gap-2 border-0 m-0 p-0">
             <Legend text="INSTITUCIÓN" />
             <p className="mb-0" style={{ color: theme.login.mutedText, fontSize: '12px', marginTop: '-4px' }}>
@@ -36,7 +61,9 @@ function ConfigurationPage() {
               Nombre
               <input
                 type="text"
-                defaultValue="Ing. Ubaldo Santilli"
+                value={nombre}
+                onChange={(event) => setNombre(event.target.value)}
+                disabled={isLoading || updateCentroNombre.isPending}
                 autoComplete="organization"
                 style={{
                   width: '100%',
@@ -54,7 +81,14 @@ function ConfigurationPage() {
           </fieldset>
 
           <div className="d-flex align-items-center gap-3">
-            <Button type="submit">Guardar cambios</Button>
+            <Button type="submit" disabled={isLoading || updateCentroNombre.isPending || !nombre.trim()}>
+              {updateCentroNombre.isPending ? 'Guardando...' : 'Guardar cambios'}
+            </Button>
+            {feedback && (
+              <span role="status" aria-live="polite" style={{ color: updateCentroNombre.isError || isError ? theme.login.error : theme.button.primaryBackground, fontSize: '13px' }}>
+                {feedback}
+              </span>
+            )}
           </div>
         </form>
       </section>

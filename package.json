@@ -18,7 +18,7 @@
     "react-hook-form": "7.89.0"
   },
   "devDependencies": {
-    "@vitejs/plugin-react": "^5.0.4",
-    "vite": "^7.1.5"
+    "@vitejs/plugin-react": "5.0.4",
+    "vite": "7.1.5"
   }
 }
