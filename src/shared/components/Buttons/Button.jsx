@@ -1,4 +1,4 @@
-import theme from '../theme/index.js'
+import theme from '../../theme/index.js'
 import './Button.css'
 
 function Button({

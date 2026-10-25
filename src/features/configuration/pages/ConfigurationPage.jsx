@@ -1,6 +1,7 @@
 import { useEffect, useState } from 'react'
-import Button from '../../../shared/components/Button.jsx'
+import Button from '../../../shared/components/Buttons/Button.jsx'
 import Legend from '../../../shared/components/Legend.jsx'
+import PageHeader from '../../../shared/components/PageHeader/PageHeader.jsx'
 import { useCentro, useUpdateCentroNombre } from '../../../shared/hooks/useCentro.js'
 import theme from '../../../shared/theme/index.js'
 
@@ -29,18 +30,12 @@ function ConfigurationPage() {
         : ''
 
   return (
-    <div
+    <section
+      aria-labelledby="configuration-title"
       className="container-fluid d-flex flex-column gap-4"
       style={{ width: '100%', padding: '10px 40px 0' }}
     >
-      <div>
-        <span style={{ color: theme.login.eyebrow, fontSize: '11px', fontWeight: 700, letterSpacing: '0.14em' }}>
-          CENTRO DE FORMACIÓN PROFESIONAL
-        </span>
-        <h1 className="mb-0" style={{ color: theme.text, fontSize: '28px', lineHeight: 1.2, marginTop: '6px' }}>
-          Configuración
-        </h1>
-      </div>
+      <PageHeader eyebrow="CENTRO DE FORMACIÓN PROFESIONAL" title="Configuración" id="configuration-title" />
 
       <section
         style={{
@@ -92,7 +87,7 @@ function ConfigurationPage() {
           </div>
         </form>
       </section>
-    </div>
+    </section>
   )
 }
 

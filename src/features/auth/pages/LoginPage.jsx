@@ -1,5 +1,6 @@
 import LoginForm from '../components/LoginForm.jsx'
 import Logo from '../../../shared/components/Logo.jsx'
+import PageHeader from '../../../shared/components/PageHeader/PageHeader.jsx'
 import theme from '../../../shared/theme/index.js'
 
 function LoginPage() {
@@ -46,33 +47,12 @@ function LoginPage() {
             padding: '32px',
           }}
         >
-          <div>
-            <div
-              style={{
-                color: theme.login.eyebrow,
-                fontSize: '11px',
-                fontWeight: 700,
-                letterSpacing: '0.14em',
-              }}
-            >
-              BIENVENIDO/A
-            </div>
-
-            <h1
-              id="login-title"
-              style={{
-                margin: '6px 0 8px',
-                fontSize: '28px',
-                lineHeight: 1.2,
-              }}
-            >
-              Iniciar sesion
-            </h1>
-
-            <p style={{ margin: 0, color: theme.login.mutedText, fontSize: '13px' }}>
-              Ingresa tus credenciales para continuar al panel de gestion.
-            </p>
-          </div>
+          <PageHeader
+            eyebrow="BIENVENIDO/A"
+            title="Iniciar sesion"
+            description="Ingresa tus credenciales para continuar al panel de gestion."
+            id="login-title"
+          />
 
           <LoginForm />
 

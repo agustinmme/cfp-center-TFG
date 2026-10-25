@@ -1,7 +1,7 @@
 import { useState } from 'react'
 import { useForm } from 'react-hook-form'
 import { ArrowRight, Eye, EyeOff, LockKeyhole, Mail } from 'lucide-react'
-import Button from '../../../shared/components/Button.jsx'
+import Button from '../../../shared/components/Buttons/Button.jsx'
 import theme from '../../../shared/theme/index.js'
 import { useAuth } from '../providers/AuthProvider.jsx'
 
