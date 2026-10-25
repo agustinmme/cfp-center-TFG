@@ -33,6 +33,22 @@ const theme = {
     inputBackground: '#f7f8f9',
     error: '#dc3545',
   },
+  table: {
+    border: '#d5dbdf',
+    rowBorder: '#e8ecef',
+  },
+  status: {
+    activeBackground: '#eaf5ef',
+    activeText: '#1e7b4f',
+    pendingBackground: '#fff5e5',
+    pendingText: '#9a661b',
+    inactiveBackground: '#f1f3f4',
+    inactiveText: '#68747b',
+  },
+  modal: {
+    overlay: 'rgba(22, 49, 58, .4)',
+    shadow: '0 20px 50px rgba(10, 30, 36, .28)',
+  },
   white: '#fff',
 }
 

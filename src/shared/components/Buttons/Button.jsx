@@ -6,6 +6,7 @@ function Button({
   type = 'button',
   className = '',
   variant = 'primary',
+  iconDirection = 'left',
   icon,
   style,
   ...buttonProps
@@ -27,8 +28,9 @@ function Button({
       }}
       {...buttonProps}
     >
-      {icon}
+      {iconDirection === 'left' && icon}
       {children}
+      {iconDirection === 'right' && icon}
     </button>
   )
 }

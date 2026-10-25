@@ -57,7 +57,7 @@ function LoginPage() {
           <LoginForm />
 
           <p style={{ margin: 0, color: theme.login.mutedText, fontSize: '12px', textAlign: 'center' }}>
-            Sistema de Gestion Academica
+            MiCentro - 0.1.0
           </p>
         </div>
       </section>

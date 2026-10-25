@@ -182,6 +182,7 @@ function LoginForm() {
         type="submit"
         style={{ width: '100%' }}
         icon={<ArrowRight size={16} strokeWidth={1.7} aria-hidden="true" />}
+        iconDirection="right"
       >
         Ingresar
       </Button>

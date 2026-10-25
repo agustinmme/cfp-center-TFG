@@ -6,7 +6,7 @@ function Legend({ text }) {
       style={{
         width: '100%',
         padding: '0 0 6px',
-        marginBottom: '14px',
+        marginBottom: '6px',
         borderBottom: `1px solid ${theme.login.border}`,
         color: theme.button.primaryBackground,
         fontSize: '11px',

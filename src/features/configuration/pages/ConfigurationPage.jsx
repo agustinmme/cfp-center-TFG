@@ -35,7 +35,7 @@ function ConfigurationPage() {
       className="container-fluid d-flex flex-column gap-4"
       style={{ width: '100%', padding: '10px 40px 0' }}
     >
-      <PageHeader eyebrow="CENTRO DE FORMACIÓN PROFESIONAL" title="Configuración" id="configuration-title" />
+      <PageHeader title="Configuración" id="configuration-title" />
 
       <section
         style={{
