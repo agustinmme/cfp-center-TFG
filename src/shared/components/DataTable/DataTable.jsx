@@ -1,6 +1,7 @@
 import theme from '../../theme/index.js'
+import './DataTable.css'
 
-function DataTable({ columns, rows, getRowKey, emptyState = 'No hay datos disponibles.' }) {
+function DataTable({ columns, rows, getRowKey, onRowClick, getRowLabel, emptyState = 'No hay datos disponibles.' }) {
   return (
     <div style={{ overflowX: 'auto' }}>
       <table className="w-100" style={{ minWidth: '760px', borderCollapse: 'collapse', fontSize: '13px' }}>
@@ -27,7 +28,23 @@ function DataTable({ columns, rows, getRowKey, emptyState = 'No hay datos dispon
         </thead>
         <tbody>
           {rows.map((row, rowIndex) => (
-            <tr key={getRowKey ? getRowKey(row, rowIndex) : rowIndex}>
+            <tr
+              className="data-table-row"
+              key={getRowKey ? getRowKey(row, rowIndex) : rowIndex}
+              {...(onRowClick ? {
+                role: 'button',
+                tabIndex: 0,
+                'aria-label': getRowLabel ? getRowLabel(row, rowIndex) : 'Ver detalles',
+                onClick: () => onRowClick(row, rowIndex),
+                onKeyDown: (event) => {
+                  if (event.target !== event.currentTarget) return
+                  if (event.key === 'Enter' || event.key === ' ') {
+                    event.preventDefault()
+                    onRowClick(row, rowIndex)
+                  }
+                },
+              } : {})}
+            >
               {columns.map((column, columnIndex) => (
                 <td
                   key={column.key}

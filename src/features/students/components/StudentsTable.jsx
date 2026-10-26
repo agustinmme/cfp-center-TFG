@@ -1,4 +1,4 @@
-import { useMemo, useState } from 'react'
+import { useEffect, useMemo, useState } from 'react'
 import { ChevronDown, Mail, MessageCircle } from 'lucide-react'
 import Button from '../../../shared/components/Buttons/Button.jsx'
 import DataTable from '../../../shared/components/DataTable/DataTable.jsx'
@@ -33,7 +33,9 @@ const iconButtonStyle = {
   color: theme.button.secondaryText,
 }
 
-function StudentsTable({ students, totalStudents, currentPage, onPageChange }) {
+const pageSize = 10
+
+function StudentsTable({ students, currentPage, onPageChange, onStudentSelect }) {
   const [query, setQuery] = useState('')
   const [appliedQuery, setAppliedQuery] = useState('')
   const [status, setStatus] = useState('Todos los estados')
@@ -47,6 +49,16 @@ function StudentsTable({ students, totalStudents, currentPage, onPageChange }) {
       return matchesQuery && matchesStatus
     })
   }, [appliedQuery, status, students])
+
+  const totalPages = Math.max(1, Math.ceil(filteredStudents.length / pageSize))
+  const paginatedStudents = useMemo(() => {
+    const start = (currentPage - 1) * pageSize
+    return filteredStudents.slice(start, start + pageSize)
+  }, [currentPage, filteredStudents])
+
+  useEffect(() => {
+    if (currentPage > totalPages) onPageChange(1)
+  }, [currentPage, onPageChange, totalPages])
 
   const columns = [
     { key: 'name', header: 'ESTUDIANTE', cellStyle: { fontWeight: 500 } },
@@ -63,8 +75,9 @@ function StudentsTable({ students, totalStudents, currentPage, onPageChange }) {
       align: 'right',
       render: (student) => (
         <div className="d-inline-flex gap-2">
-          <button type="button" aria-label={`Enviar WhatsApp a ${student.name}`} title="WhatsApp" style={{ ...iconButtonStyle, color: theme.status.activeText }}><MessageCircle size={16} aria-hidden="true" /></button>
-          <button type="button" aria-label={`Enviar correo a ${student.name}`} title="Correo" style={iconButtonStyle}><Mail size={16} aria-hidden="true" /></button>
+          {student.phone && <button type="button" onClick={(event) => event.stopPropagation()} aria-label={`Enviar WhatsApp a ${student.name}`} title="WhatsApp" style={{ ...iconButtonStyle, color: theme.status.activeText }}><MessageCircle size={16} aria-hidden="true" /></button>}
+          {student.email && <button type="button" onClick={(event) => event.stopPropagation()} aria-label={`Enviar correo a ${student.name}`} title="Correo" style={iconButtonStyle}><Mail size={16} aria-hidden="true" /></button>}
+          {!student.phone && !student.email && <span style={{ color: theme.login.mutedText }}>-</span>}
         </div>
       ),
     },
@@ -110,13 +123,20 @@ function StudentsTable({ students, totalStudents, currentPage, onPageChange }) {
         </label>
       </div>
 
-      <DataTable columns={columns} rows={filteredStudents} getRowKey={(student) => student.document} emptyState="No hay estudiantes que coincidan con la búsqueda." />
+      <DataTable
+        columns={columns}
+        rows={paginatedStudents}
+        getRowKey={(student) => student.id}
+        onRowClick={onStudentSelect}
+        getRowLabel={(student) => `Ver detalles de ${student.name}`}
+        emptyState="No hay estudiantes que coincidan con la búsqueda."
+      />
 
       <Pagination
         currentPage={currentPage}
-        totalPages={3}
-        totalItems={totalStudents}
-        visibleItems={filteredStudents.length}
+        totalPages={totalPages}
+        totalItems={filteredStudents.length}
+        visibleItems={paginatedStudents.length}
         onPageChange={onPageChange}
         itemLabel="estudiantes"
       />
