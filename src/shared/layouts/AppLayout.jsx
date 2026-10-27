@@ -1,5 +1,4 @@
 import Sidebar from './Sidebar.jsx'
-import Topbar from './Topbar.jsx'
 import theme from '../theme/index.js'
 
 function AppLayout({ children, currentPage = 'Comisiones', user, profile, onSignOut, onPageChange }) {
@@ -8,7 +7,6 @@ function AppLayout({ children, currentPage = 'Comisiones', user, profile, onSign
       <Sidebar currentPage={currentPage} user={user} profile={profile} onSignOut={onSignOut} onPageChange={onPageChange} />
 
       <div className="app-shell-main min-vh-100 d-flex flex-column" style={{ marginLeft: '265px' }}>
-        <Topbar currentPage={currentPage} />
         <main className="flex-grow-1">{children}</main>
       </div>
     </div>
